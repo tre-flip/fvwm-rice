@@ -1,4 +1,4 @@
-;;; tre-gray-theme.el --- A mostly colorless version of dracula-theme
+;;; tre-gray-theme.el --- gray theme
 
 ;; Copyright (C) 2020 Alexander K.
 ;;
