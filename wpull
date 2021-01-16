@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# pull window from any workspace and focus on it
+
+windows=$(wmctrl -xl | tr -s '[:blank:]' | cut -d ' ' -f 3-3,5- | sed 's/^[a-zA-Z0-9-]*\.//' | sort | uniq)
+
+# Add spaces to align the WM_NAMEs of the windows
+max=$(echo "$windows" | awk '{cur=length($1); max=(cur>max?cur:max)} END{print max}')
+
+windows=$(echo "$windows" | \
+              awk -v max="$max" \
+                  '{cur=length($1); printf $1; \
+                    for(i=0; i < max - cur + 1; i++) printf " "; \
+                    $1 = ""; printf "%s\n", $0}')
+
+
+target=$(echo "$windows" | dmenu -fn Terminus:size=12:antialias=none -nb rgb:2f/34/3f \
+				 -nf rgb:f3/f4/f5 -sb rgb:18/52/86 -sf rgb:AB/CD/EF \
+				 -i -p pull: | tr -s '[:blank:]' | cut -d ' ' -f 2-)
+
+if [[ -n $target ]]; then
+    wmctrl -r "$target" -b remove,hidden
+    wmctrl -R "$target"
+    wmctrl -a "$target"
+fi
+
