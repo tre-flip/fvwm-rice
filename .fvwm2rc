@@ -1,0 +1,400 @@
+# == FVWM 2 'VUE-like' config ==
+# (L) Carl Svensson, https://datagubbe.se/fvwm
+
+# == Set ImagePath ==
+ImagePath $HOME/.fvwm/icons:+
+
+# == Geometry Window ==
+# Change default font.
+# Used for geometry window and overriden everywhere else
+DefaultFont "Terminus-12:antialias=none"
+# Hide for move action
+HideGeometryWindow Move
+
+# == Set cursors ==
+# Classic root cursor
+CursorStyle "ROOT"    "X_cursor"
+CursorStyle "TITLE"   "left_ptr"
+CursorStyle "MOVE"    "left_ptr"
+CursorStyle "MENU"    "left_ptr"
+CursorStyle "SYS"     "left_ptr"
+CursorStyle "DEFAULT" "left_ptr"
+
+# == Pager but with a bit of resistance ==
+
+# DeskTopSize 4 1
+DeskTopSize 1 1
+
+DesktopName 1 term
+DesktopName 2 web
+DesktopName 3 misc
+DesktopName 4 media
+
+EdgeResistance 50 50
+EdgeScroll 0 0
+
+*FvwmButtons: Frame       1
+*FvwmButtons: Geometry    119x120-0+24 # row is 11x25, 6 rows
+*FvwmButtons: Rows        6
+*FvwmButtons: Columns     1
+*FvwmButtons: Back gray
+*FvwmButtons: (1x5, Swallow(NoClose,UseOld) "conky-mon1" 'Exec exec conky')
+*FvwmButtons: (1x1, Swallow(NoClose,UseOld) "stalonetray" 'Exec exec "stalonetray"')
+
+*FvwmPagerBack skyblue4
+*FvwmPagerFore black
+*FvwmPagerHilight slategray
+*FvwmPagerFont none
+*FvwmPagerFont none
+*FvwmPagerGeometry 119x30-0+155
+*FvwmPagerLabel FvwmPager
+*FvwmPager: WindowLabelFormat ""
+*FvwmPager: SolidSeparators
+
+
+# == Set up icon manager ==
+*FvwmIconMan: font "Terminus-12:antialias=none"
+*FvwmIconMan: managergeometry 1x0-0+197
+*FvwmIconMan: buttongeometry 119x0
+*FvwmIconMan: format "%t"
+*FvwmIconMan: focusbutton down black gray
+*FvwmIconMan: plainbutton up black gray
+*FvwmIconMan: iconbutton up black gray
+*FvwmIconMan: selectbutton down black gray
+*FvwmIconMan: iconandselectbutton down black gray
+*FvwmIconMan: focusandselectbutton down black gray
+*FvwmIconMan: action mouse 1 n sendcommand Raise-and-Focus
+*FvwmIconMan: sort id
+*FvwmIconMan: resolution global
+*FvwmIconMan: drawicons true
+
+# == Icon handling ==
+# Turn off icons
+Style * NoIcon
+# Override mini icons for FvwmIconMan
+Style * MiniIcon "iconized.png"
+Style * EWMHMiniIconOverride
+
+# == Window colors and styles ==
+# Menu colors are set in menu style below.
+
+# Active Windows
+ColorSet 16 fg Black, bg "#a59f80"
+Style * HilightColorSet 16
+
+# Inactive Windows
+Colorset 17 fg Black, bg "#808080"
+Style * Colorset 17
+
+# Window Font
+WindowFont "Terminus-12:antialias=none"
+
+# Decorate transient windows. A must for GTK apps' sub-windows.
+Style * DecorateTransient
+
+# Focus follows mouse
+Style "*" SloppyFocus
+
+# Title to the left
+TitleStyle LeftJustified
+
+# Decors and overrides
+#AddToDecor FlatBorder
+#  + BorderStyle Simple -- HiddenHandles NoInset Flat
+Style *             Title, Handles, !MWMFunctions, NoDecorHint, ResizeOpaque
+Style *             DepressableBorder, HandleWidth 6, BorderWidth 6
+Style *             InitialMapCommand Focus
+Style *		    RandomPlacement, SmartPlacement
+Style "FvwmButtons" NoTitle, Sticky, WindowListSkip, NoHandles, StaysOnBottom, CirculateSkip
+Style "FvwmIconMan" NoTitle, Sticky, WindowListSkip, NoHandles, StaysOnBottom, CirculateSkip
+Style "stalonetray" NoTitle, Sticky, WindowListSkip, NoHandles, StaysOnBottom, CirculateSkip
+Style "FvwmPager"   NoTitle, Sticky, WindowListSkip, NoHandles, StaysOnBottom, CirculateSkip
+Style Cell          NoTitle, NoHandles, BorderWidth 0, FPLenient
+Style "gnome-mpv"   NoTitle, NoHandles, BorderWidth 0, FPLenient
+Style "xmessage"    NoTitle, NoHandles, BorderWidth 0, FPLenient, WindowListSkip
+Style feh           NoTitle
+# Style "GNU IceCat"  NoTitle
+# Style emacs	    NoTitle
+# Style firefox	    NoTitle
+
+# == Menu styles ==
+
+# Colorset for menu titles
+ColorSet 18 fg White, bg "#686B9F"
+
+# Fast popups, filled submenu triangles, TWM-style titles
+MenuStyle * PopupImmediately, PopdownImmediately, PopupOffset 0 100
+MenuStyle * VerticalItemSpacing 1 1, VerticalTitleSpacing 1 1
+MenuStyle * HilightBack SteelBlue, ActiveFore White,
+MenuStyle * Hilight3DOff, TrianglesUseFore, TrianglesSolid
+MenuStyle * TitleColorset 18, HilightTitleBack
+MenuStyle * BorderWidth 1, TitleUnderlines1
+MenuStyle * ItemFormat "  %l%>  "
+
+# Menu Font
+MenuStyle * Font "Terminus-12:antialias=none"
+
+# == Various flags and styles ==
+
+# 250ms = Click
+ClickTime 250
+
+# Enable solid window moving for all window sizes
+OpaqueMoveSize -1
+
+# Emulate Motif Window Manager hints
+Emulate Mwm
+
+# # Window Placement
+# Style "*" DumbPlacement
+
+# == Mouse bindings ==
+# Bind actions to window buttons
+Mouse 0     1       A       Close
+Mouse 0     2       A       Maximize 100 100
+Mouse 0     4       A       Iconify
+
+# Listeners for root window (the "desktop") (nop supresses default menu)
+Mouse 3     R       A       Menu RootMenu
+Mouse 1     R       A       Nop
+
+# Iconify on border
+Mouse 2     FS      A       Iconify
+
+# Raise or lower any window when right clicked anywhere in the border
+Mouse 3     TSIF    A       RaiseLower
+
+# When clicking an icon, de-iconfy it and tile remaining icons
+Mouse 0     I       A       TileIcons
+
+# Handle clicks in window title bar
+Mouse 1     T       A       Maximize-or-Move
+Mouse 2     T       A       Iconify
+
+# Mouse 1 + Win key = Move window (Good for undecorated windows)
+Mouse 1     W       4       Move-or-Raise
+
+# == Init (startup) function ==
+AddToFunc "InitFunction"
++ I Module FvwmPager 1 4
++ I Module FvwmIconMan
++ I Exec startup.sh
++ I GotoDesk 0 1
++ I Module FvwmButtons
+
+# == Restart function ==
+AddToFunc "RestartFunction"
++ I Module FvwmPager 1 4
++ I Module FvwmIconMan
++ I Exec startup.sh
++ I GotoDesk 0 1
++ I Module FvwmButtons
+
+# == Window Handling Functions ==
+
+# Move and raise a window
+AddToFunc Move-or-Raise     "I" Raise
++                           "M" Move
++                           "D" Maximize
+
+# Resize and raise a window
+AddToFunc Resize-or-Raise   "I" Raise
++                           "M" Resize
++                           "D" Lower
+
+# Maximize window on double-click in title bar.
+# On single click, focus and allow moving it.
+AddToFunc Maximize-or-Move
+ + D Maximize
+ + I Raise
+ + C Focus
+ + M Move
+
+# Raise and Focus
+AddToFunc Raise-and-Focus
+ + I Iconify Off
+ + I Raise
+ + I Focus
+
+# == Keyboard bindings ==
+
+# Next/prev workspace
+Key r 		A       4       GotoDesk  1 1 4
+Key w		A       4       GotoDesk -1 1 4
+
+# Goto workspace
+Key 1		A	4	GotoDesk 0 1
+Key 2		A	4	GotoDesk 0 2
+Key 3		A	4	GotoDesk 0 3
+Key 4		A	4	GotoDesk 0 4
+
+Key 7		A	4	GotoDesk 0 1
+Key 8		A	4	GotoDesk 0 2
+Key 9		A	4	GotoDesk 0 3
+Key 0		A	4	GotoDesk 0 4
+
+# Move focused window to workspace
+Key 1		A	S4	Exec wmctrl -r :ACTIVE: -t 1
+Key 2		A	S4	Exec wmctrl -r :ACTIVE: -t 2
+Key 3		A	S4	Exec wmctrl -r :ACTIVE: -t 3
+Key 4		A	S4	Exec wmctrl -r :ACTIVE: -t 4
+
+Key 7		A	S4	Exec wmctrl -r :ACTIVE: -t 1
+Key 8		A	S4	Exec wmctrl -r :ACTIVE: -t 2
+Key 9		A	S4	Exec wmctrl -r :ACTIVE: -t 3
+Key 0		A	S4	Exec wmctrl -r :ACTIVE: -t 4
+
+# Focus next-prev in the current workspace
+Key l  A 4 Next (CurrentDesk, AcceptsFocus, !Iconic) Raise-and-Focus
+Key j  A 4 Prev (CurrentDesk, AcceptsFocus, !Iconic) Raise-and-Focus
+
+
+# TODO: xvol is missing
+# Windows key + Ctrl + up/down for volume
+Key  Up   A  C4  Exec xvol up &
+Key Down  A  C4  Exec xvol down &
+
+# Win + q = close
+Key q   A   4    Close
+
+# Win + c [+Alt] = iconify [all but focused]
+Key c   A   4    Iconify
+Key c 	A   M4  All (CurrentPage, !Iconic, !Focused, !Sticky) Iconify
+
+# Move active window slowly: Super + Alt + ijkl
+Key j  A   14  Move    w-2 w+0
+Key l  A   14  Move    w+2 w+0
+Key i  A   14  Move    w+0 w-2
+Key k  A   14  Move    w+0 w+2
+
+# move to the upper left quarter
+AddtoFunc QuartMoveUL
++ I Resize 49 47
++ I AnimatedMove 0 0
+
+# move to the upper right quarter
+AddtoFunc QuartMoveUR
++ I Resize 49 47
++ I AnimatedMove -0 0
+
+# move to the bottom left quarter
+AddtoFunc QuartMoveBL
++ I Resize 49 47
++ I AnimatedMove 0 -0
+
+# move to the bottom right quarter
+AddtoFunc QuartMoveBR
++ I Resize 49 47
++ I AnimatedMove -0 -0
+
+# move to the right half
+AddtoFunc HalfMoveR
++ I Resize 49 97
++ I AnimatedMove 0 0
+
+# move to the left half
+AddtoFunc HalfMoveL
++ I Resize 49 97
++ I AnimatedMove -0 0
+
+# move to center and resize somwat like A4
+AddtoFunc NovelMove
++ I Resize 50 90
++ I AnimatedMove 25 0
+
+# Move active window to some part of the screen
+Key k         A   4   Maximize
+Key k         A   S4  NovelMove
+Key u         A   4   QuartMoveUL
+Key o         A   4   QuartMoveUR
+Key m         A   4   QuartMoveBL
+Key period    A   4   QuartMoveBR
+Key h         A   4   HalfMoveR
+Key semicolon A   4   HalfMoveL
+
+# TILE FUNCS
+
+AddToFunc MyCascade
++ I All (CurrentPage, !Iconic, Maximized) Maximize
++ I FvwmRearrange -cascade -maximize -resize 10 2 70 70 
+
+AddToFunc MyGridTile
++ I All (CurrentPage, !Iconic, Maximized) Maximize
++ I FvwmRearrange -tile -mn 2
+
+# Tiling/cascading/rearranging
+Key comma		A	4	MyCascade
+Key i			A	4	MyGridTile
+
+# dmenus: Windows key + e/f/s
+Key d       A   4   Exec    dmenu_run -fn Terminus:size=12:antialias=none -nb rgb:2f/34/3f -nf rgb:f3/f4/f5 -sb rgb:18/52/86 -sf rgb:AB/CD/EF &
+Key f	    A	4   Exec    wpull
+Key s	    A	4   Exec    wswitch
+
+# Run terminal
+Key Return	A	4	Exec gnome-terminal
+# Run emacs
+Key e	A	4	Exec emacs
+# Make a screenshot
+Key p	A	4	Exec exec screenshot --focused
+Key p	A	M4	Exec exec screenshot
+
+# Show root menu from anywhere: Super + x
+Key x  A   4   Menu    RootMenu
+
+# == Define Menus ==
+# Submenus to System menu
+  # - Confirm exiting X11
+  AddToMenu QuitMenu "Exit X11?" Title
+  +   "No Thanks"    Nop
+  +   "Yes, Exit X"  Quit
+
+
+# Menu for top left hand ("close") button on windows
+AddToMenu Window-Ops2
++ "Move"    Move
++ "Resize"  Resize
++ "Iconify" Iconify
++ "Close"   Close
++ "Kill"    Kill
+
+
+# This is the left-click Root Menu, for launching applications.
+# It will open sub menus defined below.
+AddToMenu RootMenu
++  " Menu "  Title
++  "Emacs"     	       Exec emacs &
++  "Term"	       Exec gnome-terminal &
++  "IceCat"	       Exec icecat &
++  ""                  Nop
++  "Files"             Exec nautilus &
++  "Mixer"             Exec pavucontrol &
++  ""                  Nop
++  "Programs"	       Popup UtilsMenu
++  "Windows"	       Popup Window-Ops2
++  "System"	       Popup SystemMenu
+
+# System Commands
+AddToMenu SystemMenu
++  "Restart fvwm"  Restart fvwm2
++  ""              Nop
++  "Exit x11"      Popup QuitMenu #Quit
+
+# Various utilities and applications menu
+AddToMenu UtilsMenu
++  "Evince"	       Exec evince &
++  "Graphics"          Popup GfxMenu
++  "Media"	       Popup MediaMenu
+
+
+# Graphics programs menu
+AddToMenu GfxMenu
++   "Grafx2"     Exec exec grafx2
++   "GIMP"	 Exec exec gimp
++   "Azpainter"	 Exec exec azpainter
++   "OBS"	 Exec exec obs
+
+AddToMenu MediaMenu
+# nothing here yet
+
+# == End of config file ==
