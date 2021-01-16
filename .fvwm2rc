@@ -1,6 +1,3 @@
-# == FVWM 2 'VUE-like' config ==
-# (L) Carl Svensson, https://datagubbe.se/fvwm
-
 # == Set ImagePath ==
 ImagePath $HOME/.fvwm/icons:+
 
