@@ -1,0 +1,122 @@
+html {
+    align-items: center;
+    background-color: #30333d;
+    color: #ffffff;
+    display: flex;
+    font-size: 16px;
+    font: 18px/1 "FiraCode Nerd Font Mono";
+    /* It werks!!! */
+    /* font: 16px/1 "Fixedsys Excelsior";     */
+    height: 100%;
+    justify-content: center;
+}
+
+body {
+    background-color: #292b34;
+    box-shadow: 9px 9px 4px #1d1f2187;
+    border-radius: 3px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 15ch;
+    min-width: 30px;
+    padding: 3em;
+}
+
+p {
+    margin: 0;
+}
+
+p span {
+    color: #9ce5c0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    font-weight: bold;
+    outline: none;
+}
+
+/* a:focus::before, */
+/* a:hover { */
+/*     font-weight: bold; */
+/*     content: "> "; */
+/*     outline: none; */
+/* } */
+
+li::before {
+    white-space : pre;
+    content: "   ";
+}
+
+li:focus-within::before {
+    content: "> ";
+    outline: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    column-gap: 1.5em;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 1em 0;
+}
+
+.search {
+	width: 30rem;
+	padding: 0.5rem;
+	border: 1px solid #ffffff;
+}
+
+.search-box {
+	width: 100%;
+	margin: auto;
+	padding: 0;
+	background-color: rgba(0, 0, 0, 0);
+	color: #ffffff;
+	border: none;
+}
+
+.search-box:focus {
+    outline: none;
+}
+
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+
+p #cursor {
+    background-color: #9ce5c0;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    49% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.column {
+  float: left;
+  width: 33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
